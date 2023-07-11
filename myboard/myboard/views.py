@@ -3,6 +3,7 @@ from .models import MyBoard, MyMember
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.contrib.auth.hashers import make_password, check_password
+from datetime import datetime
 
 
 def index(request):
@@ -164,17 +165,46 @@ def login(request):
         return render(request, 'login.html')
     else:
         myname = request.POST['myname']
+
         mypassword = request.POST['mypassword']
+        
 
         mymember = MyMember.objects.get(myname=myname)
 
+        if check_password(mypassword, mymember.mypassword):
+             request.session['myname'] = mymember.myname
+             return redirect('/')
+        
+        else:
+            return redirect('login')
+
+'''
         if mypassword == mymember.mypassword:
             request.session['myname'] = mymember.myname
+            print(myname)
+            print(mypassword)
             return redirect('/')
 
         else:
             return redirect('login')
+'''
 
 def logout(request):
     del request.session['myname']
     return redirect('/')
+
+'''
+def weather(request):
+    now = datetime.now()
+    url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
+    params = {
+        'ServiceKey' : 'vDPsHfRauBIF+jBMpO/ec6aUByTVO02YSht+oAdhZoLORXaMfX8XXWTG0PNuIV6NG8EHDi+4yfaKhFeG1vJmKw==',
+        'base_date' : '20230711' ,
+        'base_time' : '0600' ,
+        'nx' : '37',
+        'ny' : '126'
+
+    }
+
+'''
+

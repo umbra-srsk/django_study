@@ -22,7 +22,7 @@
             <td><textarea cols="60" rows="10" readonly>{{ dto.mycontent }}</textarea></td>
         </tr>
             <td colspan="2" align="right">
-                <input type="button" value="목록" onclick="">
+                <input type="button" value="목록" onclick="location.href='/'">
                 <input type="button" value="수정" onclick="location.href='{% url 'update' dto.id %}'">
                 <input type="button" value="삭제" onclick="location.href='{% url 'delete' dto.id %}'">
             </td>
