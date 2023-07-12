@@ -4,6 +4,9 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime
+from django.db.models import Q
+from django.http import JsonResponse
+import math
 
 
 def index(request):
@@ -193,18 +196,29 @@ def logout(request):
     del request.session['myname']
     return redirect('/')
 
-'''
+
+
 def weather(request):
+    if request.method == 'POST':
+        lat = request.POST.get("lat")
+        lng = request.POST.get("lng")
+
+
     now = datetime.now()
     url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
     params = {
         'ServiceKey' : 'vDPsHfRauBIF+jBMpO/ec6aUByTVO02YSht+oAdhZoLORXaMfX8XXWTG0PNuIV6NG8EHDi+4yfaKhFeG1vJmKw==',
         'base_date' : '20230711' ,
         'base_time' : '0600' ,
-        'nx' : '37',
-        'ny' : '126'
-
+        'nx' : lat,
+        'ny' : lng
     }
 
-'''
 
+
+
+
+
+
+def search(request):
+    pass    
